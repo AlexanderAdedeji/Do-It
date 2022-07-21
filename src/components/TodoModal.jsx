@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 import { addTodo } from "../store/slices/todoSlice";
 import styles from "../styles/modules/modal.module.scss";
@@ -19,9 +20,10 @@ const TodoModal = ({ setOpenModal }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(todoTask);
-    // if (!todoTask.title || todoTask.status) {
-    //   return;
-    // }
+    if (!todoTask.title || !todoTask.status) {
+      toast.error("Title of Task Required")
+      return
+    }
 
     dispatch(
       addTodo({
@@ -30,6 +32,8 @@ const TodoModal = ({ setOpenModal }) => {
         time: new Date().toLocaleString()
       })
     );
+    closeModalHandler()
+    toast.success("Task Added Successfully")
   };
   return (
     <div className={styles.wrapper}>

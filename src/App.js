@@ -1,7 +1,10 @@
+import { ToastContainer, toast } from 'react-toastify';
+
 import AppContent from "./components/AppContent";
 import AppHeader from "./components/AppHeader";
 import PageTitle from "./components/PageTitle";
-import styles from './styles/modules/app.module.scss'
+import styles from './styles/modules/app.module.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -11,6 +14,8 @@ function App() {
         <AppHeader/>
         <AppContent/>
       </div>
+
+      <ToastContainer/>
     </div>
   );
 }
