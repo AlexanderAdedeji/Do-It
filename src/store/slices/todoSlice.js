@@ -10,19 +10,23 @@ export const todoSlice = createSlice({
   initialState: initialValue,
   reducers: {
     addTodo: (state, action) => {
-      state.todoList.push(action.payload)
+      state.todoList.push(action.payload);
       setTodoList(state.todoList);
-      return state
+      return state;
     },
 
-    // deleteTodo: (state, action) =>{
-    //   const todoList = getTodoList()
-    //  const new_todo_list=todoList.filter(task=> task.id !== action.payload)
-    //  setTodoList(list)
-    //  return state
-    // }
+    deleteTodo: (state, action) => {
+      const todoList = getTodoList();
+      const new_todo_list = todoList.filter(
+        (task) => task.id !== action.payload
+      );
+      setTodoList(new_todo_list);
+      state.todoList = getTodoList();
+      return state;
+    },
+
   },
 });
 
-export const { addTodo,deleteTodo } = todoSlice.actions;
+export const { addTodo, deleteTodo } = todoSlice.actions;
 export default todoSlice.reducer;

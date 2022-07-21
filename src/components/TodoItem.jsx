@@ -1,6 +1,7 @@
 import React from "react";
 import {format} from 'date-fns'
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import {MdDelete,MdEdit} from 'react-icons/md'
 import styles from "../styles/modules/todoItem.module.scss";
 import { getClasses } from "../utils/getClasses";
@@ -11,9 +12,10 @@ const TodoItem = ({id, title, status, time }) => {
     const handleDelete =() =>{
         console.log('delete')
         dispatch(deleteTodo(id))
+        toast.success('Task Deleted Successfully')
     }
     const handleEdit =() =>{
-        console.log('Edit')
+     
     }
   return (
     <div className={styles.item}>
