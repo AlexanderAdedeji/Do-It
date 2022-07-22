@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import styles from "../styles/modules/todoItem.module.scss";
 
 const checkVariants = {
@@ -26,8 +26,8 @@ const boxVariants = {
 };
 
 const CheckBox = ({ checked, toggleChecked }) => {
-  const pathLength = useMotionValue(0);
-  const opacity = useTransform(pathLength, [0.05, 0.15], [0, 1]);
+ 
+
   return (
     <motion.div
       onClick={toggleChecked}

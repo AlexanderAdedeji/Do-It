@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux/es/exports";
 import Button from "./Button";
 import SelectButton from "./SelectButton";

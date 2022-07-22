@@ -26,11 +26,7 @@ const TodoModal = ({ type, setOpenModal, todoItem }) => {
         status:todoItem.status
       }))
     }
-  
-    // return () => {
-    //   second
-    // }
-  }, [])
+  }, [todoItem, type])
   
   const handleSubmit = (e) => {
     e.preventDefault();
