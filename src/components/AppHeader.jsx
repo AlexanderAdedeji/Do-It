@@ -17,7 +17,7 @@ const AppHeader = () => {
   return (
     <div className={styles.appHeader}>
       <Button
-        variant="Secondary"
+        variant="primary"
         text="Click Me"
         type="button"
         onClick={() => {

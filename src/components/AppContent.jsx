@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import styles from '../styles/modules/app.module.scss'
+import styles from "../styles/modules/app.module.scss";
+import NoTodo from "./NoTodoScreen";
 import TodoItem from "./TodoItem";
 
 const AppContent = () => {
@@ -10,14 +11,14 @@ const AppContent = () => {
 
   sortedTodoList.sort((a, b) => new Date(b.time) - new DataTransfer(a.time));
   console.log(sortedTodoList);
-  return (
+  return sortedTodoList && sortedTodoList.length > 0 ? (
     <div className={styles.content__wrapper}>
-      {sortedTodoList && sortedTodoList.length > 0
-        ? sortedTodoList?.map((task) => (
-            <TodoItem todoItem={task} key={task.id} />
-          ))
-        : "no todo found"}
+      {sortedTodoList.map((task) => (
+        <TodoItem todoItem={task} key={task.id} />
+      ))}
     </div>
+  ) : (
+    <NoTodo />
   );
 };
 
