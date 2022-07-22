@@ -18,7 +18,7 @@ const AppHeader = () => {
     <div className={styles.appHeader}>
       <Button
         variant="primary"
-        text="Click Me"
+        text="Add a Task"
         type="button"
         onClick={() => {
           setOpenModal(true);

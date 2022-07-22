@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -27,23 +28,38 @@ const TodoItem = ({ todoItem }) => {
   }, [todoItem]);
 
   const handleDelete = () => {
-    console.log("delete");
-    dispatch(deleteTodo(id));
-    toast.success("Task Deleted Successfully");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteTodo(id));
+        toast.success("Task Deleted Successfully");
+        Swal.fire("Deleted!", "Your todo has been deleted.", "success");
+      }
+    });
   };
   const handleEdit = () => {
     setOpenModal(true);
   };
 
   const toggleChecked = () => {
-    console.log('getting here')
+    console.log("getting here");
     dispatch(
       editTodo({
         ...todoItem,
         status: checked ? "incomplete" : "complete",
       })
     );
+
     setChecked(!checked);
+
+    toast.success("Task Update Successfully");
   };
   return (
     <div className={styles.item}>
