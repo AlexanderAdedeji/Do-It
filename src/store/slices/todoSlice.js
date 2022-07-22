@@ -26,16 +26,29 @@ export const todoSlice = createSlice({
     },
     editTodo: (state, action) => {
       const todoList = getTodoList();
-      console.log(action.payload)
+      console.log(action.payload);
       const new_todo_list = todoList.map((task) => {
-        debugger
+        debugger;
         return task.id === action.payload.id ? action.payload : task;
       });
       setTodoList(new_todo_list);
       state.todoList = getTodoList();
     },
+    filterTodo: (state, action) => {
+      const todoList = getTodoList();
+      console.log(action.payload);
+      if (action.payload === "all") {
+         state.todoList= getTodoList()
+         return state
+      }
+      const new_todo_list = todoList.filter(
+        (todo) => todo.status === action.payload && todo
+      );
+      state.todoList = new_todo_list;
+      return state;
+    },
   },
 });
 
-export const { addTodo, deleteTodo,editTodo } = todoSlice.actions;
+export const { addTodo, deleteTodo, editTodo, filterTodo } = todoSlice.actions;
 export default todoSlice.reducer;
