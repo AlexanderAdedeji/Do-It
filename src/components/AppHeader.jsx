@@ -17,7 +17,7 @@ const AppHeader = () => {
         <option value="complete">Completed</option>
       </SelectButton>
       {
-        openModal &&   <TodoModal setOpenModal={setOpenModal}/>
+        openModal &&   <TodoModal type="Add" setOpenModal={setOpenModal}/>
       }
    
     </div>

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
-import { addTodo } from "../store/slices/todoSlice";
+import { addTodo, editTodo } from "../store/slices/todoSlice";
 import styles from "../styles/modules/modal.module.scss";
 import Button from "./Button";
 
-const TodoModal = ({ setOpenModal }) => {
+const TodoModal = ({ type, setOpenModal, todoItem }) => {
   const dispatch = useDispatch();
   const [todoTask, setTodoTask] = useState({
     title: "",
@@ -17,23 +17,51 @@ const TodoModal = ({ setOpenModal }) => {
     setOpenModal(false);
   };
 
+
+  useEffect(() => {
+    if(type === 'Update' && todoItem){
+      setTodoTask((prevState)=>({
+        ...prevState,
+        title:todoItem.title,
+        status:todoItem.status
+      }))
+    }
+  
+    // return () => {
+    //   second
+    // }
+  }, [])
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(todoTask);
     if (!todoTask.title || !todoTask.status) {
-      toast.error("Title of Task Required")
-      return
+      toast.error("Title of Task Required");
+      return;
     }
 
-    dispatch(
-      addTodo({
-        id: uuid(),
-        ...todoTask,
-        time: new Date().toLocaleString()
-      })
-    );
-    closeModalHandler()
-    toast.success("Task Added Successfully")
+    if (type === "Add") {
+      dispatch(
+        addTodo({
+          id: uuid(),
+          ...todoTask,
+          time: new Date().toLocaleString(),
+        })
+      );
+
+      closeModalHandler();
+      toast.success("Task Added Successfully");
+    } else {
+      dispatch(
+        editTodo({
+          ...todoItem,
+          title: todoTask.title,
+          status: todoTask.status,
+        })
+      );
+
+      closeModalHandler();
+      toast.success("Task Updated Successfully");
+    }
   };
   return (
     <div className={styles.wrapper}>
@@ -43,7 +71,7 @@ const TodoModal = ({ setOpenModal }) => {
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>
-          <h1 className={styles.form__title}>Add Task</h1>
+          <h1 className={styles.form__title}>{type} Task</h1>
           <label htmlFor="title">
             Title
             <input
@@ -77,9 +105,11 @@ const TodoModal = ({ setOpenModal }) => {
             </select>
           </label>
           <div className={styles.buttonContainer}>
-            <Button type="submit" variant="primary" text="Add Task">
-              Add Task
-            </Button>
+            <Button
+              type="submit"
+              variant="primary"
+              text={`${type} Task`}
+            ></Button>
             <Button
               type="button"
               variant="secondary"
